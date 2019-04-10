@@ -32,11 +32,13 @@ public class Merchant extends Employee {
     @Override
     public void saveEmployee(Connection con) {
         try {
-            PreparedStatement ps1 = con.prepareStatement("INSERT INTO employees VALUES ('" +
+            PreparedStatement ps1 = con.prepareStatement("INSERT INTO employees VALUES (" +
                     addValue(pesel) + "," +addValue(name) +"," + addValue(surname) + "," +
-                    salary +"," +addValue(phone) + ",M)");
+                    salary +"," +addValue(phone) + ",'M')");
+            System.out.println(ps1.toString());
             PreparedStatement ps2 = con.prepareStatement("INSERT INTO merchants VALUES (" +
                     addValue(pesel) + "," + commision + "," + commisionLimit + ")");
+
             ps1.execute();
             ps2.execute();
         } catch (SQLException e) {
@@ -45,7 +47,5 @@ public class Merchant extends Employee {
         }
     }
 
-    private String addValue(String val){
-        return "'" + val +"'";
-    }
+
 }

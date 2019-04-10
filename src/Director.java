@@ -1,4 +1,6 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Director extends Employee {
     private Integer allowance;
@@ -33,5 +35,20 @@ public class Director extends Employee {
     }
 
     @Override
-    public void saveEmployee(Connection con){}
+    public void saveEmployee(Connection con){
+        try {
+            PreparedStatement ps1 = con.prepareStatement("INSERT INTO employees VALUES (" +
+                    addValue(pesel) + "," +addValue(name) +"," + addValue(surname) + "," +
+                    salary +"," +addValue(phone) + ",'D')");
+            System.out.println(ps1.toString());
+            PreparedStatement ps2 = con.prepareStatement("INSERT INTO directors VALUES (" +
+                    addValue(pesel) + "," + allowance + "," + addValue(card) + "," + costLimit+ ")");
+
+            ps1.execute();
+            ps2.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(333);
+        }
+    }
 }

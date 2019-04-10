@@ -84,4 +84,8 @@ abstract class Employee {
     abstract public void print();
     abstract public void printWithoutPesel();
     abstract public void saveEmployee(Connection con);
+
+    protected String addValue(String val){
+        return "'" + val +"'";
+    }
 }
