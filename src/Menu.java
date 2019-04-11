@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,9 +47,11 @@ public class Menu {
                     Menu.copySocket();
                     break;
                 case 6:
+                    Menu.copyRmi();
+                case 7:
                     Menu.loadXML();
                     break;
-                case 7:
+                case 8:
                     System.exit(0);
                     break;
                 case 0:
@@ -63,9 +68,10 @@ public class Menu {
         System.out.println("\t2. Dodaj pracownika");
         System.out.println("\t3. Usuń pracownika");
         System.out.println("\t4. Kopia zapasowa - JDBC (LAB2)");
-        System.out.println("\t5. Kopia zapasowa - Socket (LAB3)");
-        System.out.println("\t6. Wczytaj XML (LAB6)");
-        System.out.println("\t7. Wyjście");
+        System.out.println("\t5. Pobierz dane z sieci - Socket (LAB3)");
+        System.out.println("\t6. Pobierz dane z sieci - RMI (LAB4)");
+        System.out.println("\t7. Wczytaj XML (LAB6)");
+        System.out.println("\t8. Wyjście");
         System.out.print("Wybór> ");
         Menu.currentMenu = reader.nextInt();
     }
@@ -252,11 +258,59 @@ public class Menu {
     }
 
     private static void copySocket(){
-        System.out.println("5. Kopia zapasowa - Socket\n");
+        System.out.println("5. Pobierz dane z sieci - Socket (LAB3)\n");
+
         System.out.print("\tAdres  :  ");
         String address = reader.next();
         System.out.print("\tPort   :  ");
         String port = reader.next();
+
+        employeesDao ed = new employeesDaoSocket(address, port);
+        List<Employee> newEmpList = ed.getEmployees();
+        System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+        String save = "";
+
+        while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")){
+            save = reader.next();
+        }
+
+        if (save.equals("t") || save.equals("T")) {
+            System.out.print("Zapisywanie... ");
+            EmpList.changeList(newEmpList);
+            System.out.println("Sukces\n");
+        }
+
+        System.out.println("[Q] - powrót do ekranu głównego");
+
+        while (!save.equals("q") && !save.equals("Q")){
+            save = reader.next();
+        }
+
+        Menu.currentMenu = 0;
+    }
+
+    private static void copyRmi(){
+        System.out.println("5. Pobierz dane z sieci - Socket (LAB3)\n");
+
+        System.out.print("\tUser   :  ");
+        String username = reader.next();
+        java.io.Console console = System.console();
+        String password;
+        try {
+            password = new String(console.readPassword("Pass   : "));
+        } catch (Exception e) {
+            password = "admin1";
+        }
+
+        for (int i = 0; i < 60; ++i)
+            System.out.print("-");
+
+        System.out.print("\n\tAdres  :  ");
+        String address = reader.next();
+        System.out.print("\tPort   :  ");
+        String port = reader.next();
+        for (int i = 0; i < 60; ++i)
+            System.out.print("-");
 
         employeesDao ed = new employeesDaoSocket(address, port);
         List<Employee> newEmpList = ed.getEmployees();
