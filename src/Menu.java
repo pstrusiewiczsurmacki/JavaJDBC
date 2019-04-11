@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,6 +44,9 @@ public class Menu {
                     Menu.copySocket();
                     break;
                 case 6:
+                    Menu.loadXML();
+                    break;
+                case 7:
                     System.exit(0);
                     break;
                 case 0:
@@ -61,9 +62,10 @@ public class Menu {
         System.out.println("\t1. Lista pracowników");
         System.out.println("\t2. Dodaj pracownika");
         System.out.println("\t3. Usuń pracownika");
-        System.out.println("\t4. Kopia zapasowa - JDBC (LAB1)");
-        System.out.println("\t5. Kopia zapasowa - Socket (LAB2)");
-        System.out.println("\t6. Wyjście");
+        System.out.println("\t4. Kopia zapasowa - JDBC (LAB2)");
+        System.out.println("\t5. Kopia zapasowa - Socket (LAB3)");
+        System.out.println("\t6. Wczytaj XML (LAB6)");
+        System.out.println("\t7. Wyjście");
         System.out.print("Wybór> ");
         Menu.currentMenu = reader.nextInt();
     }
@@ -258,6 +260,35 @@ public class Menu {
 
         employeesDao ed = new employeesDaoSocket(address, port);
         List<Employee> newEmpList = ed.getEmployees();
+        System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+        String save = "";
+
+        while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")){
+            save = reader.next();
+        }
+
+        if (save.equals("t") || save.equals("T")) {
+            System.out.print("Zapisywanie... ");
+            EmpList.changeList(newEmpList);
+            System.out.println("Sukces\n");
+        }
+
+        System.out.println("[Q] - powrót do ekranu głównego");
+
+        while (!save.equals("q") && !save.equals("Q")){
+            save = reader.next();
+        }
+
+        Menu.currentMenu = 0;
+    }
+
+    private static void loadXML(){
+        System.out.println("6. Wczytaj XML (LAB6)\n");
+
+        System.out.print("\tPobieranie... ");
+        employeesDao ed = new employeesDaoXml("employees.xml");
+        List<Employee> newEmpList = ed.getEmployees();
+        System.out.println("Sukces\n");
         System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
         String save = "";
 

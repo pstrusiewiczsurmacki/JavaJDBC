@@ -8,6 +8,7 @@ public class Merchant extends Employee {
 
     Merchant(String pesel, String name, String surname, Integer salary, String phone, Integer commision, Integer commisionLimit) {
         super(pesel, name, surname, salary, phone);
+        this.position = "M";
         this.commision = commision;
         this.commisionLimit = commisionLimit;
     }
