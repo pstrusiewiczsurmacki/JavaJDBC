@@ -74,4 +74,8 @@ public class EmpList {
     public static List<Employee> getEmployees() {
         return EmpList.getInstance().employees;
     }
+
+    public static void changeList(List<Employee> newList) {
+        getInstance().employees = newList;
+    }
 }

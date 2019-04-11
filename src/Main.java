@@ -1,3 +1,4 @@
+
 public class Main {
 
     public static void main(String[] args) {
@@ -7,9 +8,9 @@ public class Main {
         EmpList.addEmployee(d);
         EmpList.addEmployee(m);
         //EmpList.print();
-        //Menu.print();
-        employeesDao ed = new employeesDaoImpl();
-        ed.saveEmplyees();
+        Menu.print();
+        //employeesDao ed = new employeesDaoImpl();
+        //ed.saveEmployees();
         //Menu.print();
     }
 }

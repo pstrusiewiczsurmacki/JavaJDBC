@@ -1,7 +1,8 @@
 import java.io.Console;
+import java.io.Serializable;
 import java.sql.Connection;
 
-abstract class Employee {
+abstract class Employee implements Serializable {
     protected String pesel;
     protected String name;
     protected String surname;

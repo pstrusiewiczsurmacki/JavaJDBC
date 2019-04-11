@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -36,7 +39,13 @@ public class Menu {
                 case 3:
                     Menu.removeEmployee();
                     break;
+                case 4:
+                    Menu.copyDatabase();
+                    break;
                 case 5:
+                    Menu.copySocket();
+                    break;
+                case 6:
                     System.exit(0);
                     break;
                 case 0:
@@ -52,8 +61,9 @@ public class Menu {
         System.out.println("\t1. Lista pracowników");
         System.out.println("\t2. Dodaj pracownika");
         System.out.println("\t3. Usuń pracownika");
-        System.out.println("\t4. Kopia zapasowa");
-        System.out.println("\t5. Wyjście");
+        System.out.println("\t4. Kopia zapasowa - JDBC (LAB1)");
+        System.out.println("\t5. Kopia zapasowa - Socket (LAB2)");
+        System.out.println("\t6. Wyjście");
         System.out.print("Wybór> ");
         Menu.currentMenu = reader.nextInt();
     }
@@ -209,6 +219,64 @@ public class Menu {
             }
             Menu.currentMenu = 0;
         }
+    }
 
+    private static void copyDatabase(){
+        System.out.println("4. Kopia zapasowa - JDBC\n");
+        System.out.print("\t[Z]achowaj/[O]dtwórz: ");
+        String option = reader.next();
+
+        if (option != "O" && option != "o" && option != "Z" && option != "z"){
+            return;
+        }
+
+        System.out.println("\n\n[W] - Wykonaj");
+        System.out.println("[Q] - Porzuć");
+        String save = "";
+        while (!save.equals("w") && !save.equals("W") && !save.equals("q") && !save.equals("Q")){
+            save = reader.next();
+        }
+
+
+        if (save.equals("w") || save.equals("W")) {
+            employeesDao ed = new employeesDaoImpl();
+            if (option.equals("Z") || option.equals("z")) {
+                ed.saveEmployees();
+            } else {
+                // ed.getEmployees();
+            }
+        }
+        Menu.currentMenu = 0;
+    }
+
+    private static void copySocket(){
+        System.out.println("5. Kopia zapasowa - Socket\n");
+        System.out.print("\tAdres  :  ");
+        String address = reader.next();
+        System.out.print("\tPort   :  ");
+        String port = reader.next();
+
+        employeesDao ed = new employeesDaoSocket(address, port);
+        List<Employee> newEmpList = ed.getEmployees();
+        System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+        String save = "";
+
+        while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")){
+            save = reader.next();
+        }
+
+        if (save.equals("t") || save.equals("T")) {
+            System.out.print("Zapisywanie... ");
+            EmpList.changeList(newEmpList);
+            System.out.println("Sukces\n");
+        }
+
+        System.out.println("[Q] - powrót do ekranu głównego");
+
+        while (!save.equals("q") && !save.equals("Q")){
+            save = reader.next();
+        }
+
+        Menu.currentMenu = 0;
     }
 }

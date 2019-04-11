@@ -10,7 +10,7 @@ public class employeesDaoImpl implements employeesDao {
     }
 
     @Override
-    public void saveEmplyees() {
+    public void saveEmployees() {
         //ConnectionPool pool = ConnectionPool.create("")
         BasicDataSource ds = ConnectionPool.getDataSource();
         try {
@@ -19,6 +19,8 @@ public class employeesDaoImpl implements employeesDao {
                 e.saveEmployee(con);
             }
             con.commit();
+            con.close();
+            ds.close();
         } catch (Exception e) {
             System.out.println(e.toString());
             System.exit(101);

@@ -1,7 +1,10 @@
 <component name="libraryTable">
   <library name="commons-dbcp2-2.6.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/commons-dbcp2-2.6.0/commons-dbcp2-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/commons-dbcp2-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/commons-pool2-2.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/mysql-connector-java-8.0.15.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

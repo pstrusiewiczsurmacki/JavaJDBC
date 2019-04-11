@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="Employees">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="Employee" minOccurs="0" maxOccurs="unbounded" type="Employee" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:complexType abstract="true" name="Employee">
+    <xs:sequence>
+        <xs:element name="pesel" type="xs:string" />
+        <xs:element name="name" type="xs:string" />
+        <xs:element name="surname" type="xs:string" />
+        <xs:element name="position" type="xs:string" />
+        <xs:element name="salary" type="xs:int" />
+        <xs:element name="phone" type="xs:string" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Merchant">
+    <xs:complexContent>
+        <xs:extension base="Employee">
+            <xs:sequence>
+                <xs:element name="commision" type="xs:int" />
+                <xs:element name="commisionLimit" type="xs:int" />
+            </xs:sequence>
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="Director">
+    <xs:complexContent>
+        <xs:extension base="Employee">
+            <xs:sequence>
+                <xs:element name="allowance" type="xs:int" />
+                <xs:element name="card" type="xs:string" />
+                <xs:element name="costLimit" type="xs:int" />
+            </xs:sequence>
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+
+</xs:schema>
