@@ -315,7 +315,7 @@ public class Menu {
         String token = "";
 
         try {
-            System.out.print("\nAutentykacja użytkownika... ");
+            System.out.print("\nUzyskiwanie tokenu... ");
             look_up = (RmiInterface) Naming.lookup("//localhost:2020/MyServer");
             token = look_up.authenticate("admin","admin1");
             if (!token.equals("")){
@@ -339,7 +339,7 @@ public class Menu {
             System.out.print("-");
 
 
-        employeesDao ed = new employeesDaoSocket("127.0.0.1", "8189");
+        employeesDao ed = new employeesDaoSocket(address, port);
         if (((employeesDaoSocket) ed).sendMsg("LAB4")) {
             if (((employeesDaoSocket) ed).sendMsg(token)) {
                 List<Employee> newEmpList = ed.getEmployees();
