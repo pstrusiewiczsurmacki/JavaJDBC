@@ -236,7 +236,7 @@ public class Menu {
         System.out.print("\t[Z]achowaj/[O]dtwórz: ");
         String option = reader.next();
 
-        if (option != "O" && option != "o" && option != "Z" && option != "z"){
+        if (!option.equals("O") && option.equals("o") && option.equals("Z") && option.equals("z")){
             return;
         }
 
@@ -253,7 +253,8 @@ public class Menu {
             if (option.equals("Z") || option.equals("z")) {
                 ed.saveEmployees();
             } else {
-                // ed.getEmployees();
+                List<Employee> newList = ed.getEmployees();
+                EmpList.changeList(newList);
             }
         }
         Menu.currentMenu = 0;
