@@ -1,1 +1,1 @@
-# JavaJDBC
+# JavaClient
