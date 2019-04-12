@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.Naming;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,6 +49,7 @@ public class Menu {
                     break;
                 case 6:
                     Menu.copyRmi();
+                    break;
                 case 7:
                     Menu.loadXML();
                     break;
@@ -260,26 +262,32 @@ public class Menu {
     private static void copySocket(){
         System.out.println("5. Pobierz dane z sieci - Socket (LAB3)\n");
 
-        System.out.print("\tAdres  :  ");
+        /*System.out.print("\tAdres  :  ");
         String address = reader.next();
         System.out.print("\tPort   :  ");
-        String port = reader.next();
+        String port = reader.next();*/
+
+        String address = "127.0.0.1";
+        String port = "8189";
 
         employeesDao ed = new employeesDaoSocket(address, port);
-        List<Employee> newEmpList = ed.getEmployees();
-        System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+        if (((employeesDaoSocket) ed).sendMsg("LAB3")) {
+            List<Employee> newEmpList = ed.getEmployees();
+            System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+            String save = "";
+
+            while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")) {
+                save = reader.next();
+            }
+
+            if (save.equals("t") || save.equals("T")) {
+                System.out.print("Zapisywanie... ");
+                EmpList.changeList(newEmpList);
+                System.out.println("Sukces\n");
+            }
+        }
+
         String save = "";
-
-        while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")){
-            save = reader.next();
-        }
-
-        if (save.equals("t") || save.equals("T")) {
-            System.out.print("Zapisywanie... ");
-            EmpList.changeList(newEmpList);
-            System.out.println("Sukces\n");
-        }
-
         System.out.println("[Q] - powrót do ekranu głównego");
 
         while (!save.equals("q") && !save.equals("Q")){
@@ -289,8 +297,10 @@ public class Menu {
         Menu.currentMenu = 0;
     }
 
+    private static RmiInterface look_up;
+
     private static void copyRmi(){
-        System.out.println("5. Pobierz dane z sieci - Socket (LAB3)\n");
+        System.out.println("6. Pobierz dane z sieci - RMI (LAB4)\n");
 
         System.out.print("\tUser   :  ");
         String username = reader.next();
@@ -300,6 +310,22 @@ public class Menu {
             password = new String(console.readPassword("Pass   : "));
         } catch (Exception e) {
             password = "admin1";
+        }
+
+        String token = "";
+
+        try {
+            System.out.print("\nAutentykacja użytkownika... ");
+            look_up = (RmiInterface) Naming.lookup("//localhost:2020/MyServer");
+            token = look_up.authenticate("admin","admin1");
+            if (!token.equals("")){
+                System.out.println("Sukces\n");
+            } else {
+                System.out.println("Niepowodzenie\n");
+            }
+        } catch (Exception e){
+            System.out.println(e.toString());
+            System.exit(1234);
         }
 
         for (int i = 0; i < 60; ++i)
@@ -312,21 +338,31 @@ public class Menu {
         for (int i = 0; i < 60; ++i)
             System.out.print("-");
 
-        employeesDao ed = new employeesDaoSocket(address, port);
-        List<Employee> newEmpList = ed.getEmployees();
-        System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+
+        employeesDao ed = new employeesDaoSocket("127.0.0.1", "8189");
+        if (((employeesDaoSocket) ed).sendMsg("LAB4")) {
+            if (((employeesDaoSocket) ed).sendMsg(token)) {
+                List<Employee> newEmpList = ed.getEmployees();
+                System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+                String save = "";
+                while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")){
+                    save = reader.next();
+                }
+
+                if (save.equals("t") || save.equals("T")) {
+                    System.out.print("Zapisywanie... ");
+                    EmpList.changeList(newEmpList);
+                    System.out.println("Sukces\n");
+                }
+            } else
+                System.out.println("\tNiepowodzenie - Serwer nie rpzyjął tokenu");
+
+        } else {
+            System.out.println("\tNiepowodzenie - nie udało się ustalić strategii");
+        }
+
+
         String save = "";
-
-        while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")){
-            save = reader.next();
-        }
-
-        if (save.equals("t") || save.equals("T")) {
-            System.out.print("Zapisywanie... ");
-            EmpList.changeList(newEmpList);
-            System.out.println("Sukces\n");
-        }
-
         System.out.println("[Q] - powrót do ekranu głównego");
 
         while (!save.equals("q") && !save.equals("Q")){

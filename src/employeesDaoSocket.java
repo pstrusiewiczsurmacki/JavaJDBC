@@ -1,11 +1,11 @@
-import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
 public class employeesDaoSocket implements employeesDao {
     private String address;
     private int port;
+    private Socket socket;
 
     public employeesDaoSocket(String address, String port) {
         this.address = address;
@@ -18,14 +18,18 @@ public class employeesDaoSocket implements employeesDao {
             System.out.print("-");
         try {
             System.out.print("Ustanawianie połączenia... ");
-            Socket socket = new Socket(this.address, this.port);
+            if (socket == null)
+                socket = new Socket(this.address, this.port);
             System.out.println("Sukces");
 
             System.out.print("Pobieranie...               ");
 
+            OutputStream outputStream = socket.getOutputStream();
+            PrintWriter out = new PrintWriter(outputStream, true);
+            out.println("READY");
+
             InputStream inputStream = socket.getInputStream();
             ObjectInputStream objInputStream = new ObjectInputStream(inputStream);
-
             @SuppressWarnings("unchecked")
             List<Employee> newList = (List<Employee>) objInputStream.readObject();
 
@@ -47,5 +51,27 @@ public class employeesDaoSocket implements employeesDao {
     @Override
     public void saveEmployees() {
         return;
+    }
+
+    public boolean sendMsg(String strategy) {
+        try {
+            if (socket == null)
+                socket = new Socket(this.address, this.port);
+            OutputStream outputStream = socket.getOutputStream();
+            InputStream inputStream = socket.getInputStream();
+            PrintWriter out = new PrintWriter(outputStream, true);
+            out.println(strategy);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+            String response = in.readLine();
+
+            if (response.equals("OK")){
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.exit(74836);
+        }
+        return false;
     }
 }
