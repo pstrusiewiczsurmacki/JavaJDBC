@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b590138e-11a9-4c11-ad60-f93df32e3395" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.java" afterDir="false" />
-    </list>
+    <list default="true" id="b590138e-11a9-4c11-ad60-f93df32e3395" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,15 +70,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Menu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="341" column="62" selection-start-line="341" selection-start-column="62" selection-end-line="341" selection-end-column="62" />
+            <state relative-caret-position="645">
+              <caret line="56" selection-start-line="56" selection-end-line="56" />
               <folding>
                 <element signature="method#Menu#0;class#Menu#0" />
                 <element signature="class#MenuHolder#0;class#Menu#0" />
                 <element signature="method#clearScreen#0;class#Menu#0" />
-                <element signature="method#print#0;class#Menu#0" />
-                <element signature="e#696#1601#1" />
-                <element signature="e#767#1591#0" />
                 <element signature="method#printMain#0;class#Menu#0" />
                 <element signature="method#printEmployees#0;class#Menu#0" />
                 <element signature="e#2442#2488#1" />
@@ -115,7 +110,6 @@
                 <element signature="e#8768#8819#1" />
                 <element signature="e#9875#9920#1" />
                 <element signature="e#11798#11843#1" />
-                <element signature="e#11372#11417#1" />
                 <element signature="method#loadXML#0;class#Menu#0" />
                 <element signature="e#11942#11987#1" />
                 <element signature="e#12039#12187#1" />
@@ -326,7 +320,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1080" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14354323" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -338,7 +331,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.42364016" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39853558" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39853558" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -602,15 +595,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Menu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="341" column="62" selection-start-line="341" selection-start-column="62" selection-end-line="341" selection-end-column="62" />
+        <state relative-caret-position="645">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
           <folding>
             <element signature="method#Menu#0;class#Menu#0" />
             <element signature="class#MenuHolder#0;class#Menu#0" />
             <element signature="method#clearScreen#0;class#Menu#0" />
-            <element signature="method#print#0;class#Menu#0" />
-            <element signature="e#696#1601#1" />
-            <element signature="e#767#1591#0" />
             <element signature="method#printMain#0;class#Menu#0" />
             <element signature="method#printEmployees#0;class#Menu#0" />
             <element signature="e#2442#2488#1" />
@@ -645,7 +635,6 @@
             <element signature="e#8768#8819#1" />
             <element signature="e#9875#9920#1" />
             <element signature="e#11798#11843#1" />
-            <element signature="e#11372#11417#1" />
             <element signature="method#loadXML#0;class#Menu#0" />
             <element signature="e#11942#11987#1" />
             <element signature="e#12039#12187#1" />
