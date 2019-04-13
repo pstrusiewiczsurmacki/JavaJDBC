@@ -9,7 +9,7 @@ public class Main {
         EmpList.addEmployee(m);
         //EmpList.print();
         Menu.print();
-        //employeesDao ed = new employeesDaoImpl();
+        //employeesDao ed = new employeesDaoSql();
         //ed.saveEmployees();
         //Menu.print();
     }

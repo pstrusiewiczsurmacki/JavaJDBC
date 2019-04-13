@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.rmi.Naming;
 import java.util.List;
 import java.util.Scanner;
@@ -249,7 +246,7 @@ public class Menu {
 
 
         if (save.equals("w") || save.equals("W")) {
-            employeesDao ed = new employeesDaoImpl();
+            employeesDao ed = new employeesDaoSql();
             if (option.equals("Z") || option.equals("z")) {
                 ed.saveEmployees();
             } else {
@@ -263,36 +260,40 @@ public class Menu {
     private static void copySocket(){
         System.out.println("5. Pobierz dane z sieci - Socket (LAB3)\n");
 
-        /*System.out.print("\tAdres  :  ");
+        System.out.print("\tAdres  :  ");
         String address = reader.next();
         System.out.print("\tPort   :  ");
-        String port = reader.next();*/
+        String port = reader.next();
 
-        String address = "127.0.0.1";
-        String port = "8189";
+        /*String address = "127.0.0.1";
+        String port = "8189";*/
+        try {
+            employeesDao ed = new employeesDaoSocket(address, port);
+            if (((employeesDaoSocket) ed).sendMsg("LAB3")) {
+                List<Employee> newEmpList = ed.getEmployees();
+                System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+                String save = "";
 
-        employeesDao ed = new employeesDaoSocket(address, port);
-        if (((employeesDaoSocket) ed).sendMsg("LAB3")) {
-            List<Employee> newEmpList = ed.getEmployees();
-            System.out.print("\tCzy zapisać pobrane dane? [T]/[N]: ");
+                while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")) {
+                    save = reader.next();
+                }
+
+                if (save.equals("t") || save.equals("T")) {
+                    System.out.print("Zapisywanie... ");
+                    EmpList.changeList(newEmpList);
+                    System.out.println("Sukces\n");
+                }
+            }
+
             String save = "";
+            System.out.println("[Q] - powrót do ekranu głównego");
 
-            while (!save.equals("t") && !save.equals("T") && !save.equals("n") && !save.equals("N")) {
+            while (!save.equals("q") && !save.equals("Q")) {
                 save = reader.next();
             }
-
-            if (save.equals("t") || save.equals("T")) {
-                System.out.print("Zapisywanie... ");
-                EmpList.changeList(newEmpList);
-                System.out.println("Sukces\n");
-            }
-        }
-
-        String save = "";
-        System.out.println("[Q] - powrót do ekranu głównego");
-
-        while (!save.equals("q") && !save.equals("Q")){
-            save = reader.next();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.exit(839);
         }
 
         Menu.currentMenu = 0;

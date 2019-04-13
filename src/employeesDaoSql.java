@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class employeesDaoImpl implements employeesDao {
+public class employeesDaoSql implements employeesDao {
     @Override
     public List<Employee> getEmployees() {
         List<Employee> newList = new ArrayList<>();
@@ -27,10 +27,6 @@ public class employeesDaoImpl implements employeesDao {
                 } else {
                     table = "directors";
                 }
-
-                String query = "SELECT * FROM employees JOIN " + table +
-                        " WHERE employees.pesel=" + pesel +
-                        " AND " + table +".pesel=" + pesel;
 
                 PreparedStatement innerQuery = con.prepareStatement("SELECT * FROM employees JOIN " + table +
                         " WHERE employees.pesel=" + pesel +
@@ -68,27 +64,40 @@ public class employeesDaoImpl implements employeesDao {
 
     @Override
     public void saveEmployees() {
-        //ConnectionPool pool = ConnectionPool.create("")
         BasicDataSource ds = ConnectionPool.getDataSource();
 
         try {
             Connection con = ds.getConnection();
-            PreparedStatement delM = con.prepareStatement("DELETE FROM merchants");
-            PreparedStatement delD = con.prepareStatement("DELETE FROM directors");
-            PreparedStatement delE = con.prepareStatement("DELETE FROM employees");
+            try {
 
-            delM.execute();
-            delD.execute();
-            delE.execute();
-            for (Employee e : EmpList.getEmployees()) {
-                e.saveEmployee(con);
+                PreparedStatement delM = con.prepareStatement("DELETE FROM merchants");
+                PreparedStatement delD = con.prepareStatement("DELETE FROM directors");
+                PreparedStatement delE = con.prepareStatement("DELETE FROM employees");
+
+                delM.execute();
+                delD.execute();
+                delE.execute();
+                for (Employee e : EmpList.getEmployees()) {
+                    e.saveEmployee(con);
+                }
+                con.commit();
+                con.close();
+                ds.close();
+            } catch (Exception e) {
+                try {
+                    if (con != null)
+                        con.rollback();
+                } catch (Exception e2) {
+                    System.out.println(e.toString());
+                    System.out.println(e2);
+                    System.exit(102);
+                }
+                System.out.println(e.toString());
+                System.exit(101);
             }
-            con.commit();
-            con.close();
-            ds.close();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            System.exit(101);
+        }catch (Exception ee) {
+                System.out.println(ee.toString());
+                System.exit(103);
         }
     }
 }
